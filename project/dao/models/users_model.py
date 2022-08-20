@@ -1,0 +1,28 @@
+from marshmallow import Schema, fields
+
+from project.dao.models.genres_model import GenreSchema
+from project.setup.db import db
+
+
+class User(db.Model):
+    __tablename__ = 'user'
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(200), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+    role = db.Column(db.String(100), default='user')
+    name = db.Column(db.String(100))
+    surname = db.Column(db.String(100))
+    favorite_genre_id = db.Column(db.Integer, db.ForeignKey("genre.id"))
+    favorite_genre = db.relationship("Genre")
+
+
+class UserSchema(Schema):
+    id = fields.Int()
+    username = fields.Str()
+    password = fields.Str()
+    role = fields.Str()
+    name = fields.Str()
+    surname = fields.Str()
+    favorite_genre_id = fields.Int()
+    favorite_genre = fields.Pluck(GenreSchema, 'name')
+
