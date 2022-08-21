@@ -2,12 +2,13 @@ from marshmallow import Schema, fields
 
 from project.dao.models.genres_model import GenreSchema
 from project.setup.db import db
+from project.setup.db import models
 
 
-class User(db.Model):
+class User(models.Base):
     __tablename__ = 'user'
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(200), nullable=False)
+    # id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(200), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
     role = db.Column(db.String(100), default='user')
     name = db.Column(db.String(100))
@@ -18,7 +19,7 @@ class User(db.Model):
 
 class UserSchema(Schema):
     id = fields.Int()
-    username = fields.Str()
+    email = fields.Str()
     password = fields.Str()
     role = fields.Str()
     name = fields.Str()

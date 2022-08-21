@@ -3,7 +3,7 @@ from unittest.mock import patch
 import pytest
 
 from project.exceptions import ItemNotFound
-from project.models import Genre
+from project.dao.models.genres_model import Genre
 from project.services import GenresService
 
 
@@ -35,7 +35,7 @@ class TestGenresService:
         assert genres_service.get_item(genre.id)
 
     def test_genre_not_found(self, genres_dao_mock, genres_service):
-        genres_dao_mock.get_by_id.return_value = None
+        genres_dao_mock.get_one.return_value = None
 
         with pytest.raises(ItemNotFound):
             genres_service.get_item(10)

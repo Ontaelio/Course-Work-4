@@ -3,11 +3,12 @@ from marshmallow import Schema, fields
 from project.setup.db import db
 from project.dao.models.genres_model import GenreSchema
 from project.dao.models.directors_model import DirectorSchema
+from project.setup.db import models
 
 
-class Movie(db.Model):
+class Movie(models.Base):
     __tablename__ = 'movie'
-    id = db.Column(db.Integer, primary_key=True)
+    # id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255))
     description = db.Column(db.String(255))
     trailer = db.Column(db.String(255))
