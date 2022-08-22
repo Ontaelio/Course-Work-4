@@ -6,6 +6,7 @@ import hmac
 from typing import Optional, List
 
 import jwt
+from flask_restx import abort
 
 from project.dao import UsersDAO
 from project.exceptions import ItemNotFound
@@ -20,7 +21,7 @@ class UsersService:
     def get_one(self, pk: int) -> User:
         if user := self.dao.get_one(pk):
             return user
-        raise ItemNotFound(f'User with pk={pk} not exists.')
+        raise ItemNotFound(f'User with pk={pk} does not exist.')
 
     def create_tokens(self, email, password):
         user = self.dao.get_by_email(email)
@@ -53,8 +54,9 @@ class UsersService:
         user_d['password'] = self.make_password_hash(user_d.get('password'))
         return self.dao.create(user_d)
 
-    def update(self, user_d):
-        user = self.get_one(user_d.get('id'))
+    def update(self, uid, user_d):
+        user = self.get_one(uid)
+
         if 'email' in user_d:
             user.email = user_d.get('email')
         if 'name' in user_d:
@@ -65,6 +67,15 @@ class UsersService:
             user.favorite_genre_id = user_d.get('favorite_genre_id')
 
         self.dao.update(user)
+
+    def change_password(self, uid, passwords):
+        user = self.get_one(uid)
+        if self.check_password(user.password, passwords["password_1"], config.PWD_HASH_SALT, config.PWD_ALGO):
+            user.password = self.make_password_hash(passwords["password_2"])
+            self.dao.update(user)
+            return 1
+        return None
+
 
     def delete(self, rid):
         self.dao.delete(rid)

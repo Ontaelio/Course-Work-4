@@ -9,7 +9,7 @@ class MoviesService:
     def __init__(self, dao: MoviesDAO) -> None:
         self.dao = dao
 
-    def get_item(self, pk: int) -> Movie:
+    def get_one(self, pk: int) -> Movie:
         if movie := self.dao.get_one(pk):
             return movie
         raise ItemNotFound(f'Movie with pk={pk} does not exist.')

@@ -26,4 +26,4 @@ class MovieView(Resource):
         """
         Get movie by id.
         """
-        return movie_service.get_item(movie_id)
+        return movie_service.get_one(movie_id)
