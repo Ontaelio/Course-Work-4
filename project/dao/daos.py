@@ -37,3 +37,21 @@ class MoviesDAO(BaseDAO[Movie]):
 
 class UsersDAO(BaseDAO[User]):
     __model__ = User
+
+    def create(self, user_d):
+        ent = User(**user_d)
+        self._db_session.add(ent)
+        self._db_session.commit()
+        return ent
+
+    def get_by_email(self, email):
+        return self._db_session.query(User).filter(User.email == email).first()
+
+    def delete(self, rid):
+        user = self.get_one(rid)
+        self._db_session.delete(user)
+        self._db_session.commit()
+
+    def update(self, user):
+        self._db_session.add(user)
+        self._db_session.commit()
