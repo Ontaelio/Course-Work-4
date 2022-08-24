@@ -9,7 +9,7 @@ class GenresService:
     def __init__(self, dao: GenresDAO) -> None:
         self.dao = dao
 
-    def get_item(self, pk: int) -> Genre:
+    def get_one(self, pk: int) -> Genre:
         if genre := self.dao.get_one(pk):
             return genre
         raise ItemNotFound(f'Genre with pk={pk} does not exist.')

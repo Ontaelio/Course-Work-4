@@ -66,7 +66,7 @@ class UsersService:
         if 'favorite_genre_id' in user_d:
             user.favorite_genre_id = user_d.get('favorite_genre_id')
 
-        self.dao.update(user)
+        return self.dao.update(user)
 
     def change_password(self, uid, passwords):
         user = self.get_one(uid)

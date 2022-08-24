@@ -13,7 +13,7 @@ class TestGenresService:
     @patch('project.dao.GenresDAO')
     def genres_dao_mock(self, dao_mock):
         dao = dao_mock()
-        dao.get_by_id.return_value = Genre(id=1, name='test_genre')
+        dao.get_one.return_value = Genre(id=1, name='test_genre')
         dao.get_all.return_value = [
             Genre(id=1, name='test_genre_1'),
             Genre(id=2, name='test_genre_2'),
@@ -32,17 +32,24 @@ class TestGenresService:
         return obj
 
     def test_get_genre(self, genres_service, genre):
-        assert genres_service.get_item(genre.id)
+        assert genres_service.get_one(genre.id)
 
     def test_genre_not_found(self, genres_dao_mock, genres_service):
         genres_dao_mock.get_one.return_value = None
 
         with pytest.raises(ItemNotFound):
-            genres_service.get_item(10)
+            genres_service.get_one(10)
 
     @pytest.mark.parametrize('page', [1, None], ids=['with page', 'without page'])
     def test_get_genres(self, genres_dao_mock, genres_service, page):
-        genres = genres_service.get_all(page=page)
+        genres = genres_service.get_all(page=page, sort_by=None)
         assert len(genres) == 2
         assert genres == genres_dao_mock.get_all.return_value
-        genres_dao_mock.get_all.assert_called_with(page=page)
+        genres_dao_mock.get_all.assert_called_with(page=page, sort_by=None)
+
+    @pytest.mark.parametrize('sort_by', ['created', None], ids=['with sort', 'without sort'])
+    def test_get_genres(self, genres_dao_mock, genres_service, sort_by):
+        genres = genres_service.get_all(page=None, sort_by=sort_by)
+        assert len(genres) == 2
+        assert genres == genres_dao_mock.get_all.return_value
+        genres_dao_mock.get_all.assert_called_with(page=None, sort_by=sort_by)

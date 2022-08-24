@@ -26,4 +26,4 @@ class DirectorView(Resource):
         """
         Get director by id.
         """
-        return director_service.get_item(director_id)
+        return director_service.get_one(director_id)

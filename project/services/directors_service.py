@@ -9,7 +9,7 @@ class DirectorsService:
     def __init__(self, dao: DirectorsDAO) -> None:
         self.dao = dao
 
-    def get_item(self, pk: int) -> Director:
+    def get_one(self, pk: int) -> Director:
         if director := self.dao.get_one(pk):
             return director
         raise ItemNotFound(f'Director with pk={pk} not exists.')

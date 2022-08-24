@@ -21,7 +21,7 @@ movie: Model = api.model('Фильм', {
     'rating': fields.Float(required=True, example=7.2),
     'genre_id': fields.Integer(required=True, example=1),
     'genre': fields.String(attribute='genre.name', example='Комедия'),
-    # 'genre': fields.Nested(genre),  # String(max_length=100, example='Комедия'),
+    # 'genre': fields.Nested(genre),
     'director_id': fields.Integer(required=True, example=2),
     'director': fields.String(attribute='director.name', example='Тим Бёртон'),
 })
