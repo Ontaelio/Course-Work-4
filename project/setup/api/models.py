@@ -36,3 +36,34 @@ user: Model = api.model('Пользователь', {
     'favorite_genre_id': fields.Integer(example=1),
     'favorite_genre': fields.String(attribute='genre.name', example='Комедия'),
 })
+
+favorite: Model = api.model('Любимое', {
+    'user_id': fields.Integer(example=1),
+    'user': fields.Nested(user),
+    'movie_id': fields.Integer(example=2),
+    'movie': fields.Nested(movie),
+})
+
+# deprecated models, kept for future reference
+
+favorite_movies_old: Model = api.model('Любимые фильмы', {
+     'movie': fields.Nested(movie),
+})
+
+favorite_movies: Model = api.model('Любимые фильмы', {
+    'id': fields.Integer(attribute='movie.id', example=1),
+    'title': fields.String(attribute='movie.title', example='Марс Атакует!'),
+    'description': fields.String(attribute='movie.description', example='...'),
+    'trailer': fields.String(attribute='movie.trailer', example='https://www.youtube.com/watch?v=Qjpmysz4x-4'),
+    'year': fields.Integer(attribute='movie.year', example=1999),
+    'rating': fields.Float(attribute='movie.rating', example=7.2),
+    'genre_id': fields.Integer(attribute='movie.genre_id', example=1),
+    'genre': fields.String(attribute='movie.genre.name', example='Комедия'),
+    'director_id': fields.Integer(attribute='movie.director_id', example=2),
+    'director': fields.String(attribute='movie.director.name', example='Тим Бёртон'),
+})
+
+
+favored_by: Model = api.model('Любимые фильмы', {
+     'user': fields.Nested(user),
+})

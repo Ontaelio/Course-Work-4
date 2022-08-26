@@ -13,6 +13,15 @@ def app():
 
 
 @pytest.fixture
+def request_context():
+    """create the app and return the request context as a fixture
+       so that this process does not need to be repeated in each test
+    """
+    app = create_app('module.with.TestingConfig')
+    return app.test_request_context
+
+
+@pytest.fixture
 def db(app):
     database.init_app(app)
     database.drop_all()

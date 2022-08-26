@@ -1,0 +1,48 @@
+GET http://localhost:10001/users/
+Accept: application/json
+
+###
+
+POST http://localhost:10001/auth/register
+Content-Type: application/json
+
+{
+  "email": "Kaliaka233@mail.ru",
+  "password": "qwerty",
+  "role": "user"
+}
+
+###
+
+POST http://localhost:10001/auth/login
+Content-Type: application/json
+
+{
+  "email": "Kaliaka233@mail.ru",
+  "password": "qwerty"
+}
+
+###
+
+POST http://localhost:10001/auth/
+Content-Type: application/json
+
+{
+  "username": "Kaliaka233",
+  "password": "qwerty"
+}
+
+###
+
+GET http://localhost:10001/users/1
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IkthbGlha2EyMzNAbWFpbC5ydSIsInJvbGUiOiJ1c2VyIiwiZXhwIjoxNjYxNDI2OTU5fQ.m0StVsFdFIA9mVvNE6Bdt9YddDSUXwg-M92X9sIUwyw
+
+###
+
+PUT http://localhost:10001/auth/
+Content-Type: application/json
+
+{
+  "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Ilpsb2pEZWQiLCJyb2xlIjoiYWRtaW4iLCJleHAiOjE2NzIyMzUxODV9.WCAjkqF8ZUilB6v_0wDRKs2mYeBEUzHBmlmXESPL7Jw"
+}

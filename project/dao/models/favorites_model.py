@@ -1,10 +1,12 @@
 from project.setup.db import db
-from project.setup.db import models
+from sqlalchemy import DateTime, func
 
 
-class Favorites(models.Base):
+class Favorite(db.Model):
     __tablename__ = 'favorite'
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    created = db.Column(DateTime, nullable=False, default=func.now())
+    updated = db.Column(DateTime, default=func.now(), onupdate=func.now())
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True)
     user = db.relationship("User")
-    movie_id = db.Column(db.Integer, db.ForeignKey("movie.id"))
+    movie_id = db.Column(db.Integer, db.ForeignKey("movie.id"), primary_key=True)
     movie = db.relationship("Movie")

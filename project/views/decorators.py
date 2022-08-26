@@ -1,3 +1,5 @@
+from functools import wraps
+
 import jwt
 from flask import request, abort
 
@@ -5,12 +7,15 @@ from project.config import config
 
 
 def auth_required(func):
+
+    @wraps(func)
     def __wrapper(*args, **kwargs):
         if 'Authorization' not in request.headers:
-            abort(401)
+            abort(405)
 
         data = request.headers['Authorization']
         token = data.split('Bearer ')[-1]
+        # token = ''
 
         try:
             jwt.decode(token, config.JWT_SECRET, algorithms=[config.JWT_ALGORITHM,])
