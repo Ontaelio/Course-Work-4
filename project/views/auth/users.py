@@ -2,11 +2,15 @@ from flask import request
 from flask_restx import Namespace, Resource
 
 from project.container import user_service
+from project.dao.models.users_model import UserSchema
 from project.setup.api.models import user
 from project.setup.api.parsers import page_parser
 from project.views.decorators import auth_required
 
 api = Namespace('users')
+
+# user_schema = UserSchema()
+# users_schema = UserSchema(many=True)
 
 
 @api.route('/')
@@ -18,6 +22,8 @@ class UsersView(Resource):
         Get all users.
         """
         return user_service.get_all(**page_parser.parse_args())
+        # all_users = user_service.get_all(**page_parser.parse_args())
+        # return users_schema.dump(all_users) #, 200
 
 
 @api.route('/<int:user_id>/')

@@ -14,7 +14,8 @@ class User(models.Base):
     name = db.Column(db.String(100))
     surname = db.Column(db.String(100))
     favorite_genre_id = db.Column(db.Integer, db.ForeignKey("genre.id"))
-    favorite_genre = db.relationship("Genre")
+    favorite_genre = db.relationship("Genre", lazy='subquery')
+    # genre = db.relationship("Genre")  # , lazy='subquery')
 
 
 class UserSchema(Schema):

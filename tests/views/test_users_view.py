@@ -1,22 +1,9 @@
-from unittest import mock
-
 import pytest
 from unittest.mock import patch, MagicMock
-import sys
-from flask import request
-import jwt
 
 from project.dao.models.genres_model import Genre
 from project.dao.models.users_model import User
-from project.views.auth import users
-
-# @pytest.fixture
-# @patch('project.views.decorators')
-# def auth_required(func):
-#     def __wrapper(*args, **kwargs):
-#         return func(*args, **kwargs)
-#     return __wrapper
-from tests.conftest import request_context
+from project.services import UsersService
 
 
 class TestUsersView:
@@ -56,17 +43,9 @@ class TestUsersView:
         assert len(response.json) == 0
 
     def test_user(self, client, user, genre):
-        # r_mock = mock.MagicMock() # return_value ={'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IkthbGlha2EyMzNAbWFpbC5ydSIsInJvbGUiOiJ1c2VyIiwiZXhwIjoxNjYxNDI2OTU5fQ.m0StVsFdFIA9mVvNE6Bdt9YddDSUXwg-M92X9sIUwyw'})
-        # r_mock.headers = {'Authorization': 'Bearer eyJ0e'}
         mmock = MagicMock(return_value=True)
-        # with mock.patch('flask.request', r_mock):
-
-        #response = client.get("/users/1/")
         with patch('jwt.decode', mmock):
-            response = client.get("/users/1/", headers={'Authorization': 'Bearer 453645267'})
-
-        # with patch.dict('sys.module', {'request.json': r_mock}):
-
+            response = client.get("/users/1/", headers={'Authorization': 'Bearer mock'})
 
         assert response.status_code == 200, 'Not authorized'
         assert response.json == {"id": user.id, "email": user.email,
@@ -75,8 +54,13 @@ class TestUsersView:
                                  "name": user.name,
                                  "surname": user.surname,
                                  "role": user.role,
-                                 "favorite_genre": None} # genre.name}
+                                 "favorite_genre": genre.name}
 
     def test_user_not_found(self, client, user):
-        response = client.get("/users/2/")
+        mmock = MagicMock(return_value=True)
+        with patch('jwt.decode', mmock):
+            response = client.get("/users/2/", headers={'Authorization': 'Bearer mock'})
         assert response.status_code == 404
+
+    def test_user_auth(self, client, user):
+        token = UsersService.generate_jwt(user)

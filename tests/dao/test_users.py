@@ -59,7 +59,7 @@ class TestUsersDAO:
     def test_get_by_email(self, users_dao, user_1):
         assert users_dao.get_by_email(user_1.email) == user_1
 
-    def test_update(self, users_dao, user_1, user_2):
+    def test_update(self, users_dao, user_2):
         assert users_dao.get_one(user_2.id) == user_2
         user_2.password = 'NEW ONE'
         users_dao.update(user_2)

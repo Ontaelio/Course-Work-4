@@ -11,11 +11,10 @@ def auth_required(func):
     @wraps(func)
     def __wrapper(*args, **kwargs):
         if 'Authorization' not in request.headers:
-            abort(405)
+            abort(401)
 
         data = request.headers['Authorization']
         token = data.split('Bearer ')[-1]
-        # token = ''
 
         try:
             jwt.decode(token, config.JWT_SECRET, algorithms=[config.JWT_ALGORITHM,])
