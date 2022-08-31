@@ -76,7 +76,6 @@ class UsersService:
             return 1
         return None
 
-
     def delete(self, rid):
         self.dao.delete(rid)
 

@@ -15,7 +15,7 @@ class FavoritesService:
         mdao = MoviesDAO(db.session)
         self.ms = MoviesService(mdao)
         udao = UsersDAO(db.session)
-        self.us = UsersService(mdao)
+        self.us = UsersService(udao)
 
     def get_one(self, uid: int, mid: int) -> Favorite:
         if fav := self.dao.get_one(uid, mid):
@@ -32,7 +32,7 @@ class FavoritesService:
         if self.ms.get_one(mid):
             movie = Favorite(user_id=uid, movie_id=mid)
             return self.dao.add_movie(movie)
-        # raise ItemNotFound(f'Movie {id} does not exist11111')
+        return None
 
     def delete(self, uid, mid):
         self.dao.delete_movie(uid, mid)

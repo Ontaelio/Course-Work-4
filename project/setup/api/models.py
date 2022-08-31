@@ -30,7 +30,7 @@ movie: Model = api.model('Фильм', {
 user: Model = api.model('Пользователь', {
     'id': fields.Integer(required=True, example=1),
     'email': fields.String(required=True, max_length=200, example='test@test.com'),
-    'password': fields.String(required=True, max_length=255, example='123'),
+    # 'password': fields.String(required=True, max_length=255, example='123'),
     'role': fields.String(max_length=100, example='user'),
     'name': fields.String(max_length=100, example='John'),
     'surname': fields.String(rmax_length=100, example='Smith'),

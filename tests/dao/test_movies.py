@@ -6,45 +6,48 @@ from project.dao.models.genres_model import Genre
 from project.dao.models.movies_model import Movie
 
 
+@pytest.fixture
+def movies_dao(db):
+    return MoviesDAO(db.session)
+
+
+@pytest.fixture
+def movie_1(db):
+    m = Movie(title="Фильм 1",
+              description="Трам парам пам пам, старый немой боевик.",
+              trailer="https://www.youtube.com/watch?v=BB61nauFkds",
+              year=1902,
+              rating=3.4,
+              genre_id=1,
+              director_id=1, )
+    d = Director(name="Зайчик Крошечный")
+    g = Genre(name="Боевик")
+    db.session.add(g)
+    db.session.add(d)
+    db.session.add(m)
+    db.session.commit()
+    return m
+
+
+@pytest.fixture
+def movie_2(db):
+    m = Movie(title="Фильм 2",
+              description="Тут все очень интересно и увлекательно.",
+              trailer="https://www.youtube.com/watch?v=BB61nauFkds",
+              year=2025,
+              rating=9.4,
+              genre_id=2,
+              director_id=2, )
+    d = Director(name="Котик Крупноватый")
+    g = Genre(name="Комедия")
+    db.session.add(g)
+    db.session.add(d)
+    db.session.add(m)
+    db.session.commit()
+    return m
+
+
 class TestMoviesDAO:
-
-    @pytest.fixture
-    def movies_dao(self, db):
-        return MoviesDAO(db.session)
-
-    @pytest.fixture
-    def movie_1(self, db):
-        m = Movie(title="Фильм 1",
-                  description="Трам парам пам пам, старый немой боевик.",
-                  trailer="https://www.youtube.com/watch?v=BB61nauFkds",
-                  year=1902,
-                  rating=3.4,
-                  genre_id=1,
-                  director_id=1,)
-        d = Director(name="Зайчик Крошечный")
-        g = Genre(name="Боевик")
-        db.session.add(g)
-        db.session.add(d)
-        db.session.add(m)
-        db.session.commit()
-        return m
-
-    @pytest.fixture
-    def movie_2(self, db):
-        m = Movie(title="Фильм 2",
-                  description="Тут все очень интересно и увлекательно.",
-                  trailer="https://www.youtube.com/watch?v=BB61nauFkds",
-                  year=2025,
-                  rating=9.4,
-                  genre_id=2,
-                  director_id=2, )
-        d = Director(name="Котик Крупноватый")
-        g = Genre(name="Комедия")
-        db.session.add(g)
-        db.session.add(d)
-        db.session.add(m)
-        db.session.commit()
-        return m
 
     def test_get_movie_by_id(self, movie_1, movies_dao):
         assert movies_dao.get_one(movie_1.id) == movie_1

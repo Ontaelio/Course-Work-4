@@ -38,12 +38,18 @@ def client(app, db):
 
 @pytest.fixture
 def user_to_add():
-    return {'email': 'test3@bbb.com',
-            'password': 'secret',
-            'role': 'admin',
-            'name': 'John',
-            'surname': 'Ohmygod',
-            'favorite_genre_id': 1}
+    return {"email": "test3@bbb.com",
+            "password": "123456789",
+            "role": "admin",
+            "name": "John",
+            "surname": "Ohmygod",
+            "favorite_genre_id": 1}
+
+
+@pytest.fixture
+def fav_to_add():
+    return {"user_id": 1,
+            "movie_id": 2}
 
 
 @pytest.fixture
@@ -51,3 +57,7 @@ def pass_hash():
     return['123456789',
     b"FfPIRKseRPU0Ie9LWD+BopJfEf00xcwhbWnKHospGpE="
     ]
+
+@pytest.fixture
+def passwords():
+    return{'password_1': '123456789', 'password_2': 'no_secret'}

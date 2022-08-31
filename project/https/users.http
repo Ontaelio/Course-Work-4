@@ -34,6 +34,17 @@ Content-Type: application/json
 
 ###
 
+PATCH http://localhost:10001/users/1/
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IkthbGlha2EyMzNAbWFpbC5ydSIsInJvbGUiOiJ1c2VyIiwiZXhwIjoxNjYxNzYyODA2fQ.DQzAaZPVL_3-exuOsCuiV-q19IH_57hpLe2iGWUQNHc
+
+{
+  "username": "Kaliaka233",
+  "password": "qwerty"
+}
+
+###
+
 GET http://localhost:10001/users/1
 Content-Type: application/json
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IkthbGlha2EyMzNAbWFpbC5ydSIsInJvbGUiOiJ1c2VyIiwiZXhwIjoxNjYxNDI2OTU5fQ.m0StVsFdFIA9mVvNE6Bdt9YddDSUXwg-M92X9sIUwyw

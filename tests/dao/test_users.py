@@ -5,34 +5,35 @@ from project.dao.models.genres_model import Genre
 from project.dao.models.users_model import User
 
 
+@pytest.fixture
+def users_dao(db):
+    return UsersDAO(db.session)
+
+@pytest.fixture
+def user_1(db):
+    u = User(email="a@b.com",
+             password='12345',
+             favorite_genre_id=1)
+    g = Genre(name="Боевик")
+    db.session.add(g)
+    db.session.add(u)
+    db.session.commit()
+    return u
+
+@pytest.fixture
+def user_2(db):
+    u = User(email="a2@botnet.com",
+             password='qwerty',
+             role='admin',
+             favorite_genre_id=2)
+    g = Genre(name="Комедия")
+    db.session.add(g)
+    db.session.add(u)
+    db.session.commit()
+    return u
+
+
 class TestUsersDAO:
-
-    @pytest.fixture
-    def users_dao(self, db):
-        return UsersDAO(db.session)
-
-    @pytest.fixture
-    def user_1(self, db):
-        u = User(email="a@b.com",
-                 password='12345',
-                 favorite_genre_id=1)
-        g = Genre(name="Боевик")
-        db.session.add(g)
-        db.session.add(u)
-        db.session.commit()
-        return u
-
-    @pytest.fixture
-    def user_2(self, db):
-        u = User(email="a2@botnet.com",
-                 password='qwerty',
-                 role='admin',
-                 favorite_genre_id=2)
-        g = Genre(name="Комедия")
-        db.session.add(g)
-        db.session.add(u)
-        db.session.commit()
-        return u
 
     def test_get_user_by_id(self, user_1, users_dao):
         assert users_dao.get_one(user_1.id) == user_1
