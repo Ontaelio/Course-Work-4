@@ -97,6 +97,7 @@ class UsersService:
 
     def generate_jwt(self, user_obj):
         data = {
+            'id': user_obj.id,
             'email': user_obj.email,
             'role': user_obj.role,
         }

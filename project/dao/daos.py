@@ -1,5 +1,6 @@
 from typing import Optional, List
 
+from flask_restx import abort
 from flask_sqlalchemy import BaseQuery
 from sqlalchemy import desc
 from werkzeug.exceptions import NotFound
@@ -49,6 +50,8 @@ class UsersDAO(BaseDAO[User]):
 
     def delete(self, rid):
         user = self.get_one(rid)
+        if not user:
+            abort(404)
         self._db_session.delete(user)
         self._db_session.commit()
 

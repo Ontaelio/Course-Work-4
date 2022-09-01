@@ -1,27 +1,40 @@
 from flask import request, abort, jsonify
 from flask_restx import Namespace, Resource
 
-from project.container import favorite_service
+from project.container import favorite_service, movie_service
 from project.exceptions import DuplicateItem
 from project.setup.api.models import favorite, favorite_movies, favored_by, user, movie
+from project.views.decorators import auth_returned
 
 api = Namespace('favorites')
 
 @api.route('/movies/<int:mid>')
 class AddFavoriteMovie(Resource):
-    def post(self, mid):
-        movie = mid
-        uid = 3
-        if movie is None:
+
+    @auth_returned
+    def post(self, mid, obj=None):
+        if not obj:
             abort(400)
 
-        if favorite_service.create(uid, movie):
+        uid = obj['id']
+
+        if movie_service.get_one(mid) is None:
+            abort(400)
+
+        if favorite_service.create(uid, mid):
             return "", 201
 
         raise DuplicateItem('Already exists')
 
-    def delete(self, mid):
-        uid = 1
+    @auth_returned
+    def delete(self, mid, obj=None):
+        if not obj:
+            abort(400)
+
+        if movie_service.get_one(mid) is None:
+            abort(400)
+
+        uid = obj['id']
         favorite_service.delete(uid, mid)
         return "", 204
 

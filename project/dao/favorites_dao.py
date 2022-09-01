@@ -2,6 +2,7 @@ from typing import List, Optional
 
 import sqlalchemy.exc
 from flask import current_app
+from flask_restx import abort
 from flask_sqlalchemy import BaseQuery
 from sqlalchemy import desc
 
@@ -65,6 +66,8 @@ class FavoritesDAO:
 
     def delete_movie(self, uid, mid):
         rec = self.get_one(uid, mid)
+        if not rec:
+            abort(404)
         self.session.delete(rec)
         self.session.commit()
 

@@ -7,7 +7,7 @@ POST http://localhost:10001/auth/register
 Content-Type: application/json
 
 {
-  "email": "Kaliaka233@mail.ru",
+  "email": "abab@abab.ab",
   "password": "qwerty",
   "role": "user"
 }
@@ -18,7 +18,7 @@ POST http://localhost:10001/auth/login
 Content-Type: application/json
 
 {
-  "email": "Kaliaka233@mail.ru",
+  "email": "abab@abab.ab",
   "password": "qwerty"
 }
 
@@ -28,26 +28,15 @@ POST http://localhost:10001/auth/
 Content-Type: application/json
 
 {
-  "username": "Kaliaka233",
+  "username": "abab@abab.ab",
   "password": "qwerty"
 }
 
 ###
 
-PATCH http://localhost:10001/users/1/
+GET http://localhost:10001/users/6
 Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IkthbGlha2EyMzNAbWFpbC5ydSIsInJvbGUiOiJ1c2VyIiwiZXhwIjoxNjYxNzYyODA2fQ.DQzAaZPVL_3-exuOsCuiV-q19IH_57hpLe2iGWUQNHc
-
-{
-  "username": "Kaliaka233",
-  "password": "qwerty"
-}
-
-###
-
-GET http://localhost:10001/users/1
-Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IkthbGlha2EyMzNAbWFpbC5ydSIsInJvbGUiOiJ1c2VyIiwiZXhwIjoxNjYxNDI2OTU5fQ.m0StVsFdFIA9mVvNE6Bdt9YddDSUXwg-M92X9sIUwyw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NiwiZW1haWwiOiJhYmFiQGFiYWIuYWIiLCJyb2xlIjoidXNlciIsImV4cCI6MTY2MTk1Mzk2N30.qP7T4j8O8zL4CnW9_sd5xF9uHG-BNAmsI3e-4VLZH4I
 
 ###
 
@@ -57,3 +46,17 @@ Content-Type: application/json
 {
   "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Ilpsb2pEZWQiLCJyb2xlIjoiYWRtaW4iLCJleHAiOjE2NzIyMzUxODV9.WCAjkqF8ZUilB6v_0wDRKs2mYeBEUzHBmlmXESPL7Jw"
 }
+
+###
+
+POST http://localhost:10001/favorites/movies/20
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NiwiZW1haWwiOiJhYmFiQGFiYWIuYWIiLCJyb2xlIjoidXNlciIsImV4cCI6MTY2MTk1Mzk2N30.qP7T4j8O8zL4CnW9_sd5xF9uHG-BNAmsI3e-4VLZH4I
+
+###
+
+###
+
+DELETE http://localhost:10001/favorites/movies/4
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NiwiZW1haWwiOiJhYmFiQGFiYWIuYWIiLCJyb2xlIjoidXNlciIsImV4cCI6MTY2MTk1Mzk2N30.qP7T4j8O8zL4CnW9_sd5xF9uHG-BNAmsI3e-4VLZH4I
