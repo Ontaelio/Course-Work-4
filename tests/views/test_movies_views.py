@@ -5,21 +5,24 @@ from project.dao.models.genres_model import Genre
 from project.dao.models.movies_model import Movie
 
 
-class TestMoviesView:
-    @pytest.fixture
-    def movie(self, db):
-        obj = Movie(title="movie",
-                    description='1234',
-                    trailer='link',
-                    year=1999,
-                    rating=7.0,
-                    genre_id=1,
-                    director_id=1
-                    )
+@pytest.fixture
+def movie(db):
+    obj = Movie(title="movie",
+                description='1234',
+                trailer='link',
+                year=1999,
+                rating=7.0,
+                genre_id=1,
+                director_id=1
+                )
 
-        db.session.add(obj)
-        db.session.commit()
-        return obj
+    db.session.add(obj)
+    db.session.commit()
+    return obj
+
+
+class TestMoviesView:
+
 
     @pytest.fixture
     def director(self, db):

@@ -49,6 +49,12 @@ def fav_21(db, movie_1, user_2):
     db.session.commit()
     return f
 
+@pytest.fixture
+def movie_add_21():
+    f = Favorite(user_id=2,
+                 movie_id=1)
+    return f
+
 
 @pytest.fixture
 def fav_12(db, movie_2, user_1):
@@ -96,11 +102,15 @@ class TestFavoritesDAO:
         assert favorites_dao.get_users(1, page=2) == [user_2]
         assert favorites_dao.get_users(1, page=3) == []
 
-    def test_add_movie(self, favorites_dao, movie_1, movie_2, user_1):
-        favorites_dao.add_movie()
+    def test_add_movie(self, favorites_dao, movie_1, user_2, movie_add_21):
+        tst = favorites_dao.add_movie(movie_add_21)
+        assert tst.user_id == 2
+        assert tst.movie_id == 1
 
-    def test_delete_movie(self):
-        ...
+    def test_delete_movie(self, favorites_dao, movie_1, movie_2, fav_11, fav_12):
+        assert favorites_dao.get_movies(1) == [movie_1, movie_2]
+        favorites_dao.delete_movie(1, 1)
+        assert favorites_dao.get_movies(1) == [movie_2]
 
 
 

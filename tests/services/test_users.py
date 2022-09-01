@@ -25,6 +25,7 @@ class TestUsersService:
                                             # b"FfPIRKseRPU0Ie9LWD+BopJfEf00xcwhbWnKHospGpE="
         dao.create.return_value = 'Ok'
         dao.update.return_value = 'Update ok'
+        dao.delere.return_value = None
 
         return dao
 
@@ -91,5 +92,9 @@ class TestUsersService:
         assert a is not None
         b = users_service.refresh_tokens(a['refresh_token'])
         assert b is not None
+
+    def test_delete(self, users_service, users_dao_mock):
+        users_service.delete(1)
+        assert users_dao_mock.delete.called
 
 
